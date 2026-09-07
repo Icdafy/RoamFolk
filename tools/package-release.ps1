@@ -1,5 +1,11 @@
 ﻿$ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
+function Get-Sha256([string]$Path) {
+  $stream = [System.IO.File]::OpenRead($Path)
+  $algorithm = [System.Security.Cryptography.SHA256]::Create()
+  try { return [System.BitConverter]::ToString($algorithm.ComputeHash($stream)).Replace('-', '').ToLower() }
+  finally { $stream.Dispose(); $algorithm.Dispose() }
+}
 Push-Location $projectRoot
 try {
   if (!(Test-Path 'dist/server/index.js') -or !(Test-Path 'dist/server/wrangler.json')) { throw 'Run npm run build first.' }
@@ -17,14 +23,14 @@ try {
   $releasePackage.scripts = @{ start = 'wrangler dev --config dist/server/wrangler.json' }
   $releasePackage | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stage 'package.json') -Encoding utf8
   $entries = Get-ChildItem -LiteralPath $stage -Recurse -File | ForEach-Object {
-    @{ path = $_.FullName.Substring($stage.Length + 1).Replace('\','/'); sha256 = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLower() }
+    @{ path = $_.FullName.Substring($stage.Length + 1).Replace('\','/'); sha256 = (Get-Sha256 $_.FullName) }
   }
   @{ version=$version; commit=$commit; files=@($entries) } | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stage 'release-manifest.json') -Encoding utf8
   $archive = Join-Path $projectRoot ('.work/RoamFolk-v' + $version + '-build.zip')
   if (Test-Path -LiteralPath $archive) { throw 'Release archive already exists; preserve it or choose a new version.' }
   tar.exe -a -cf $archive -C $stage .
   if ($LASTEXITCODE -ne 0) { throw 'Archive failed' }
-  $checksum = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLower()
+  $checksum = (Get-Sha256 $archive)
   ($checksum + '  ' + (Split-Path $archive -Leaf)) | Set-Content ($archive + '.sha256') -Encoding ascii
   Write-Output $archive
   Write-Output ('SHA256 ' + $checksum)
