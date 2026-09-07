@@ -1,4 +1,4 @@
-param([string]$BlenderPath = $env:BLENDER_PATH)
+﻿param([string]$BlenderPath = $env:BLENDER_PATH)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
 if (!$BlenderPath) {
