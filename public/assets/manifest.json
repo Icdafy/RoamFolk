@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "pipeline-sample",
+  "kind": "fixture",
+  "generator": "Blender 4.5.13 LTS",
+  "metersPerUnit": 1,
+  "runtimeUpAxis": "Y",
+  "sourceUpAxis": "Z",
+  "source": "assets/source/pipeline-sample.blend",
+  "model": "public/assets/models/pipeline-sample.glb",
+  "budgetBytes": 20971520,
+  "requiredAnchors": [
+    "pipeline.sample.spawn",
+    "pipeline.sample.seat"
+  ],
+  "note": "Original engineering fixture. Not a playable floor or the formal building."
+}

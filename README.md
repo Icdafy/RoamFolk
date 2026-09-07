@@ -4,27 +4,43 @@
 
 ## 当前状态
 
-- 当前版本：`v0.1.0`（开发计划文档版）。
-- 本次已完成：保存完整开发计划、完善项目 README 和更新日志。
-- 尚未实现：游戏代码、Blender 模型、可运行构建及在线试玩。
-- 工程准备阶段的 Blender 配置与游戏脚手架仍待后续实施；本次文档版不代表整项工程准备已完成。
-- 计划正文保留原始表述，其中“当前目录为空”“本轮只确定计划”等文字描述的是计划制定时的状态；实际进展以本 README 和更新日志为准。
+当前版本 **v0.1.1：第一阶段工程准备**。v0.1.0 文档版及历史保留。
 
-## 开发计划
+已落地 Sites / React / TypeScript / Three.js 工程、Blender 4.5.13 LTS、可编辑样片及 GLB 导出、九层注册、共享接口、环境与资源检查、自动测试和发布打包流程。
 
-阅读 [完整开发计划](docs/完整开发计划.md)，了解交互设计、角色体系、技术架构、Blender 资源流程、开发里程碑和验收标准。
+当前页面是**工程预览**：可查看原创建筑样片、缩放和复位镜头，查看九个正式楼层的筹备状态。样片不是正式大厦或 21 层；所有正式楼层仍为待开放。
 
-- 目标楼层：1、2、3、4、21、22、23、24、25 层。
-- 首个正式样板：21 层，等待楼层参考图片后建模。
-- 首期：电脑浏览器单机生活沙盒，8 个可扩充的原创角色。
-- 后续：公共多人世界，先支持游客身份和表情动作交流。
-- 在线试玩计划：单机阶段仅项目所有者可访问。
+尚未实现：25 层大厦选层交互、正式室内模型、角色、移动/寻路、碰撞、活动、IndexedDB 存档、多人游戏。下一阶段为 v0.2.0 大厦入口；21 层正式建模等待参考图片。
 
-## 本地与版本管理
+## 启动
 
-- 本地项目根目录：`F:\漫楼`。
-- GitHub 仓库：[Icdafy/RoamFolk](https://github.com/Icdafy/RoamFolk)。
-- 每次完成并验收一批更新，同步本地提交、GitHub、README、更新日志和 Release。
-- 查看 [更新日志](CHANGELOG.md) 和 [Releases](https://github.com/Icdafy/RoamFolk/releases)。
+需要 Node.js 24 LTS。项目根目录运行：
 
-当前为文档版本，暂无游戏启动命令或试玩地址；工程建立后补充实际可用的启动方式。
+```powershell
+npm ci
+npm run dev
+```
+
+访问终端显示的地址，默认 [本地开发预览](http://localhost:3000/)。
+
+```powershell
+npm run doctor
+npm run check
+npm run build
+npm start
+```
+
+生产构建预览通常为 [本地生产预览](http://127.0.0.1:8787/)。
+运行网页不依赖 Blender；编辑模型时使用 `git lfs pull` 取得 .blend 源文件，配置 Blender 后运行 `npm run assets:generate`。
+
+完整启动与构建包使用方法见 [启动说明](docs/启动说明.md)。
+
+## 文档与发布
+
+- [完整开发计划](docs/完整开发计划.md)：原始计划保留，实际进展以本 README 为准。
+- [工程与资源规范](docs/工程与资源规范.md)：目录、Blender、接口与发布流程。
+- [第一阶段验收记录](docs/第一阶段验收.md)：已验证项目和未验证范围。
+- [更新日志](CHANGELOG.md)、[v0.1.1 发布说明](docs/releases/v0.1.1.md)。
+- [GitHub 仓库](https://github.com/Icdafy/RoamFolk)、[GitHub Releases](https://github.com/Icdafy/RoamFolk/releases)。
+
+本地项目根目录：`F:\漫楼`。网页预览使用 Sites 所有者私有访问；公开 GitHub 源码与 Release 不受该网页访问权限限制。最终发布状态和私人预览入口见 GitHub Release 的发布回执，避免将预分配网址误认为已上线。

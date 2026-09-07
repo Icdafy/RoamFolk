@@ -1,0 +1,5 @@
+* text=auto
+*.sh text eol=lf
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.glb binary
+*.png binary
